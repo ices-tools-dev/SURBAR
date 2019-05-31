@@ -53,29 +53,6 @@ library(lattice)
 path <- getwd()
 source("surbar_functions.r")
 
-# AIC function for nls.lm (Katherine Mullen)
-logLik.nls.lm <- function(object, REML = FALSE, ...)
-{
-	res <- object$fvec
-	N <- length(res)
-	val <- -N * (log(2 * pi) + 1 - log(N) + log(sum(res^2)))/2
-	## the formula here corresponds to estimating sigma^2.
-	attr(val, "df") <- 1L + length(coef(object))
-	attr(val, "nobs") <- attr(val, "nall") <- N
-	class(val) <- "logLik"
-	val
-}
-AIC.nls.lm <- function(object, REML = FALSE, ...)
-{
-	res <- object$fvec
-	N <- length(res)
-	val <- -N * (log(2 * pi) + 1 - log(N) + log(sum(res^2)))/2
-	df <- 1L + length(coef(object))
-	aic <- 2*N - 2*val 
-	class(aic) <- "AIC"
-	aic
-}
-
 # Determine output destination
 pdf.plots <- FALSE
 x.win <- 10
